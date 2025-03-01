@@ -17,24 +17,36 @@ public class QueueApp {
             System.out.println("3. Remove Task");
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            
+            // Get user input and handle invalid inputs
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } else {
+                System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                scanner.nextLine(); // Consume invalid input
+                continue;
+            }
 
             switch (choice) {
                 case 1:
                     System.out.print("Enter Task ID: ");
                     int id = scanner.nextInt();
-                    scanner.nextLine(); // consume newline
+                    scanner.nextLine(); // Consume newline
                     System.out.print("Enter Task Description: ");
                     String desc = scanner.nextLine();
                     Task task = new Task(id, desc);
                     queueService.enqueue(task);
-                    System.out.println("Task added.");
+                    System.out.println("Task added successfully.");
                     break;
                 case 2:
                     System.out.println("Current Tasks in Queue:");
-                    for (Task t : queueService.listTasks()) {
-                        System.out.println(t);
+                    if (queueService.listTasks().isEmpty()) {
+                        System.out.println("The queue is empty.");
+                    } else {
+                        for (Task t : queueService.listTasks()) {
+                            System.out.println(t);
+                        }
                     }
                     break;
                 case 3:
@@ -42,16 +54,18 @@ public class QueueApp {
                     if (removedTask != null) {
                         System.out.println("Removed Task: " + removedTask);
                     } else {
-                        System.out.println("No tasks to remove (queue is empty).");
+                        System.out.println("The queue is empty. No tasks to remove.");
                     }
                     break;
                 case 4:
-                    System.out.println("Exiting application.");
+                    System.out.println("Exiting application. Thank you!");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please select from 1 to 4.");
+                    System.out.println("Invalid choice. Please select an option between 1 and 4.");
             }
         }
+
+        // Close scanner to free up resources
         scanner.close();
     }
 }

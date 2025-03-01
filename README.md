@@ -1,4 +1,3 @@
-Project Description
 The Java Queue Application is a console-based program that uses an in-memory queue to manage Task
  objects. Users can interact with the program through a menu-driven interface to:
 1. Add a task to the queue.
